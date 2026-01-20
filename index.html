@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSE 135 - H(ajin)A(lbert)J(oey)</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+
+      & body {
+          font-family: Arial, Helvetica, sans-serif;
+          display: grid;
+          grid-template-rows: auto 1fr auto;
+          min-height: 100vh;
+
+          & header {
+              padding: 20px;
+              text-align: center;
+
+              & h1 {
+                  margin: 0 0 10px 0;
+              }
+
+              & p {
+                  margin: 0;
+              }
+          }
+
+          & main {
+              margin: 0 auto;
+              padding: 20px;
+              display: grid;
+              gap: 30px;
+              width: 100%;
+
+              & section {
+                  padding: 25px;
+                  border-radius: 5px;
+
+                  & h2 {
+                      margin: 0 0 20px 0;
+                      border-bottom: 2px;
+                      padding-bottom: 10px;
+                  }
+
+                  & table {
+                      width: 100%;
+                      border-collapse: collapse;
+
+                      & thead tr th {
+                          padding: 12px;
+                          text-align: left;
+                          border: 1px solid black;
+                      }
+
+                      & tbody tr td {
+                          padding: 12px;
+                          border: 1px solid black;
+                      }
+
+                      & tbody tr td a {
+                          text-decoration: none;
+                      }
+
+                      & tbody tr td a:hover {
+                          text-decoration: underline;
+                      }
+                  }
+              }
+          }
+
+          & footer {
+              text-align: center;
+              padding: 20px;
+
+              & p {
+                  margin: 0;
+              }
+
+              & p a {
+                  text-decoration: none;
+              }
+
+              & p a:hover {
+                  text-decoration: underline;
+              }
+          }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>CSE 135 - H(ajin)A(lbert)J(oey)</h1>
+    <p>Online Database Analytics Applications</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Server Links</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Server</th>
+            <th>URL</th>
+          </tr>
+        </thead>  
+        <tbody>
+          <tr>
+            <td>Landing Page</td>
+            <td><a href="https://haj135.site">haj135.site</a></td>
+          </tr>
+          <tr>
+            <td>Collector</td>
+            <td><a href="https:/collector.haj135.site">collector.haj135.site</a></td>
+          </tr>
+          <tr>
+            <td>Reporting</td>
+            <td><a href="https:/reporting.haj135.site">reporting.haj135.site</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Members</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Albert</td>
+            <td><a href="/members/albertho.html">View Profile</a></td>
+          </tr>
+          <tr>
+            <td>Hajin</td>
+            <td><a href="/members/hajinpark.html">View Profile</a></td>
+          </tr>
+          <tr>
+            <td>Joey</td>
+            <td><a href="/members/joeykim.html">View Profile</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Assignments</h2>
+      <thead>
+        <tr>
+          <th>Assignment</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Homework 1</td>
+          <td><a href="/hw1">View</a></td>
+        </tr>
+      </tbody>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 CSE 135 H(ajin)A(lbert)J(oey) | <a href="https://github.com/Tofulati/haj135">Github Repo</a></p>
+  </footer>
+</body>
+
+</html>
