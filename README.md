@@ -54,3 +54,6 @@ After setup, use this command to push to prod:
 A demo GIF showing the full deployment pipeline
 ![GitHub Auto Deploy Demo](GitHub-Deploy.gif)
 
+## Compression Answers
+When we enabled mod_deflate on the server, we noticed that the size of the network transferred was much smaller than that of the resource sizes. This was probably a result of the compression of the files when being transferred from the server. Moreover, we noticed that the request headers included deflate and gzip within its ```Accept-Encoding``` header. 
+
