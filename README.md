@@ -41,6 +41,7 @@
   - Deployment log: ```/var/log/deploy-haj135.log```
 
 ## Deployment Command
+```git remote set-url prod ssh://<username>@64.23.226.243/var/repo/haj135.git```
 ```git push prod main```
 
 ## Deployment Demo
