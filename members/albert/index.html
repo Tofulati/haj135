@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albert Ho's Portfolio Page</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/view-transition.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <div class="intro-overlay">
+        <section class="intro-text">
+            <h2 class="typewriter">Hello, I'm Albert.</h2>
+            <h2 class="typewriter">Welcome to my page!</h2>
+        </section>
+    </div>
+
+    <header>
+        <nav>
+            <h1><a href="/">Albert Ho</a></h1>
+            <ul id="nav-links">
+                <li><a href="/pages/about.html">About </a></li>
+                <li><a href="/pages/research.html">Research</a></li>
+                <li><a href="/pages/projects.html">Projects</a></li>
+                <li><a href="/pages/resume.html">Resume</a></li>
+                <li><a href="/pages/contact.html">Contact</a></li>
+            </ul>
+
+            <div class="theme-toggle-wrapper">
+                <input type="checkbox" id="theme-toggle" aria-label="Toggle theme">
+                <label for="theme-toggle" class="theme-toggle-label"></label>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="about-desc">
+            <img src="./assets/images/profile.jpg" alt="Profile Pic">
+            <section id="profile-desc">
+                <h2>Hi, I'm Albert.</h2>
+                <p>I am an enthusiastic and highly motivated undergraduate student working towards a B.S. and M.S. Computer Science. I am interested in the application of Computer Science within bioinformatics and machine learning, especially in the procurement of accelerated bioinformatics solutions utilizing machine learning and modeling. Also, I am eager to learn more about the technology and problem solving within computational sciences, especially in regard to manipulating and analyzing data efficiently and accurately. Please reach out for any opportunities or internships, I would love to get in touch.</p>
+            </section>
+        </div>
+        <span id="notice">
+            <strong>Note:</strong><i> Page is still under construction.</i>
+        </span>
+        <hello-world></hello-world>
+    </main>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/intro-show.js"></script>
+    <script src="/scripts/bubble.js"></script>
+    <script src="/scripts/view-transition.js"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <noscript>
+        <p>JavaScript is required to toggle themes and persist your preference.</p>
+    </noscript>
+    <footer>
+        <p>&copy; 2025 Albert Ho. All rights reserved.</p>
+    </footer>
+</body>
+</html>

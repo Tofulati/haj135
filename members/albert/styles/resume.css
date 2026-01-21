@@ -1,0 +1,49 @@
+:root {
+  --card-border: 1px solid var(--text);
+  --button-bg: var(--primary);
+  --button-radius: 4px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    background-color: var(--background);
+    color: var(--text);
+
+    .resume-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 900px;
+
+        .resume-pdf {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 8.5 / 11;
+            object-fit: contain;
+
+            border: var(--card-border);
+            border-radius: 8px;
+            background-color: var(--background);
+        }
+
+        .download-btn {
+            margin-top: 1rem;
+            padding: 0.6rem 1.1rem;
+            background: var(--primary);
+            border-radius: var(--button-radius);
+            border: none;
+            cursor: pointer;
+
+            a {
+                color: var(--text);
+                text-decoration: none;
+            }
+        }
+    }
+}

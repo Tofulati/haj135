@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albert Ho's Portfolio Page - Contact</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/contact.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1><a href="/">Albert Ho</a></h1>
+            <ul id="nav-links">
+                <li><a href="/pages/about.html">About</a></li>
+                <li><a href="/pages/research.html">Research</a></li>
+                <li><a href="/pages/projects.html">Projects</a></li>
+                <li><a href="/pages/resume.html">Resume</a></li>
+                <li><a href="/pages/contact.html" class="active">Contact</a></li>
+            </ul>
+            
+            <div class="theme-toggle-wrapper">
+                <input type="checkbox" id="theme-toggle" aria-label="Toggle theme">
+                <label for="theme-toggle" class="theme-toggle-label"></label>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Contact Me</h2>
+            <p>
+                Have any inquries? Feel free to send me a message!
+            </p>
+            <form id="contactForm" novalidate>
+                <fieldset>
+                    <legend class="required">Send a Message</legend>
+
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required minlength="2" maxlength="100" pattern="[A-Za-z\s\-']+" title="Please enter a valid name (letters, spaces, hyphens, apostrophes only)" aria-required="true">
+
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required title="Please enter a valid email address" aria-required="true">
+
+                    <label for="title">Message Title:</label>
+                    <input type="text" id="title" name="title" placeholder="Subject" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" placeholder="Write your message here (50–500 characters)..." required minlength="50" maxlength="500"></textarea>
+                    <char-counter id="char-counter">500 characters remaining</char-counter>
+
+                    <output id="error-output" aria-live="polite"></output>
+                    <output id="info-output" aria-live="polite"></output>
+
+                    <button type="submit">Send Message</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <span id="notice">
+            <strong>Note:</strong><i> Page is still under construction.</i>
+        </span>
+    </main>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/bubble.js"></script>
+    <script src="/scripts/view-transition.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("IM2LGsNo1BJStRkU3"); 
+        })();
+
+        const form = document.getElementById('contactForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            emailjs.sendForm('service_8iobe6h', 'template_g6oa9e9', form)
+            .then(() => {
+                alert('Message sent successfully!');
+                form.reset();
+            })
+            .catch((error) => {
+                alert('Failed to send message: ' + JSON.stringify(error));
+            });
+        });
+    </script>
+    <noscript>
+        <p>JavaScript is required to toggle themes and persist your preference.</p>
+    </noscript>
+    <footer>
+        <p>&copy; 2025 Albert Ho. All rights reserved.</p>
+    </footer>
+    <script src="/scripts/contact.js"></script>
+</body>
+</html>
