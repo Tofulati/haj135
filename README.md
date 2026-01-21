@@ -45,5 +45,5 @@
 
 ## Deployment Demo
 A demo GIF showing the full deployment pipeline
-
+![GitHub Auto Deploy Demo](GitHub-Deploy.gif)
 
