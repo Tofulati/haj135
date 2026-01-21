@@ -22,6 +22,9 @@
   - Favicon
   - robots.txt
   - Homework pages and files
+- **Login Information:**
+  - User: same as ssh (i.e. grader)
+  - Password: same as ssh (i.e. grader135)
 
 ## GitHub Auto-Deploy Setup
 - **Overview:**
