@@ -1,0 +1,22 @@
+#!/bin/bash
+
+WORK_TREE="/var/www/haj135.site/public_html"
+GIT_DIR="/var/repo/haj135.git"
+LOG_FILE="/var/repo/logs/deploy-haj135.log"
+GITHUB_REMOTE_URL="git@github.com:Tofulati/haj135.git"
+
+echo "$(date): Deployment started $USER" >> "$LOG_FILE"
+
+
+git --work-tree="$WORK_TREE" --git-dir="$GIT_DIR" checkout -f main
+
+chmod -R 755 "$WORK_TREE"
+
+echo "$(date): Deployment completed successfully" >> "$LOG_FILE"
+
+echo "$(date): GitHub repository update started" >> "$LOG_FILE"
+
+# Push the changes to GitHub
+git push $GITHUB_REMOTE_URL HEAD:main
+
+echo "$(date): GitHub repository completed successfully" >> "$LOG_FILE"
