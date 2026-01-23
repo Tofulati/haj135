@@ -58,4 +58,4 @@ A demo GIF showing the full deployment pipeline
 When we enabled mod_deflate on the server, we noticed that the size of the network transferred was much smaller than that of the resource sizes. This was probably a result of the compression of the files when being transferred from the server. Moreover, we noticed that the request headers included deflate and gzip within its ```Accept-Encoding``` header. 
 
 ## Obscure Server Identity
-WIP
+In order to do this, we installed ```sudo apt install libapache2-mod-security2``` in apache2.conf. Within this file, we had to make sure that the serversignature was off, in order for us to change the header. In addition to this, we updated servertokens to production, such that when we push to the live server, it would change the tokens. Finally, we updated the secserversignature to force the server header to be what we wanted, in this case "CSE 135 Server." These changes were made through altering the security of the apache server and forcing the headers to be what we wanted.
