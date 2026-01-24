@@ -13,6 +13,8 @@
 - ```{user}@64.23.226.243```
 - Each auth user has a password
 - Root access only for system admin
+- To access mysql the command below using the same root user password when prompted:
+```> mysql -u root -p```
 
 ## Live Website
 - **URL:** https://haj135.site/
