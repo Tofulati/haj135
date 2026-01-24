@@ -31,6 +31,7 @@
   - Code is pushed from local machine to bare Git repo on server
   - A ```post-recieve``` hook checks out latest version on main branch
   - Files are deployed to Apache web root
+  - Latest version on local main branch is pushed to remote Github repository
   - Root access isn't required for deployment (as long as user on server)
 - **Deployment Flow:**
   1. Developer commits changes locally
@@ -40,15 +41,19 @@
 - **Server Paths:**
   - Bare Git repo: ```/var/repo/haj135.git```
   - Web root: ```/var/www/haj135.site/public_html```
+  - Github repository: ```https://github.com/Tofulati/haj135.git```
   - Deployment hook: ```/var/repo/haj135.git/hooks/post-receive```
   - Deployment log: ```/var/log/deploy-haj135.log```
 
 ## Deployment Command
 Run the following once:
+```git remote add prod ssh://<username>@64.23.226.243/var/repo/haj135.git```
+
+if prod already exists:
 ```git remote set-url prod ssh://<username>@64.23.226.243/var/repo/haj135.git```
 
 After setup, use this command to push to prod:
-```git push prod main```
+```git push prod```
 
 ## Deployment Demo
 A demo GIF showing the full deployment pipeline
