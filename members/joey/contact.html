@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Joseph Kim - Contact</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+  <body class="site">
+
+    <header class="site-header">
+      <h1>Joseph Kim</h1>
+      <nav aria-label="Primary navigation" class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="resume.html">Resume</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <section class="about-section" aria-labelledby="contact">
+        <hr class="rule">
+
+        <!-- Flex container -->
+        <div class="contact-wrap">
+          <aside class="contact-aside" aria-labelledby="reach-me">
+            <ul class="tight contact-links">
+              <li>
+                <img src="mail-icon.png" alt="Email icon" class="icon">
+                <a href="mailto:jowii.kim@gmail.com">jowii.kim@gmail.com</a>
+              </li>
+              <li>
+                <img src="linkedin-icon.png" alt="LinkedIn icon" class="icon">
+                <a href="https://www.linkedin.com/in/josephkim614/" target="_blank" rel="noopener noreferrer">linkedin.com/in/josephkim614</a>
+              </li>
+              <li>
+                <img src="github-logo.png" alt="GitHub icon" class="icon">
+                <a href="https://github.com/jowiik" target="_blank" rel="noopener noreferrer">github.com/jowiik</a>
+              </li>
+            </ul>
+          </aside>
+
+          <section class="contact-main" aria-labelledby="send-msg">
+            <h3 id="send-msg" class="subhead">Send a message</h3>
+
+            <form class="contact-form" action="https://formspree.io/f/mdkprpdb" method="POST">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required>
+
+              <label for="email">Email</label>
+              <input id="email" name="_replyto" type="email" required>
+
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" type="text" required>
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+
+              <button type="submit">Send</button>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2025 Joseph Kim</p>
+    </footer>
+
+    </body>
+</html>

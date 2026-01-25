@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Joseph Kim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfolio of Joseph Kim, software engineer.">
+  <link rel="icon" href="favicon.ico">
+  <link rel="author" href="humans.txt">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="site">
+  <header class="site-header">
+    <h1>Joseph Kim</h1>
+    <nav aria-label="Primary navigation" class="site-nav">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="about.html">About</a>
+      <a href="resume.html">Resume</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <section aria-label="Profile photo" class="profile">
+      <picture>
+        <source srcset="Headshot.JPEG" type="image/jpeg">
+        <img src="Headshot.JPEG" alt="Joseph Kim headshot" class="headshot">
+      </picture>
+    </section>
+
+    <section aria-labelledby="intro" class="hero">
+      <h2 id="intro" class="hero-title">Hi, I'm Joseph</h2>
+      <p class="lead intro-text">
+        I am a senior at the University of California, San Diego pursuing a Bachelor of Science in Computer Science.
+        I am currently seeking internship and full-time opportunities as a Front-End or Full Stack Software Engineer,
+        where I can apply my technical skills and creativity to something that makes a real impact.
+      </p>
+      <p class="progress-row">Portfolio completion: <progress value="100" max="100">100%</progress></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Joseph Kim</p>
+  </footer>
+
+  <!-- Optional: restore your hello-world custom element -->
+  <script>
+    class HelloConsole extends HTMLElement {
+      connectedCallback(){ console.log("Hello world! — from <hello-console>"); }
+    }
+    customElements.define('hello-console', HelloConsole);
+  </script>
+  <hello-console></hello-console>
+</body>
+</html>
