@@ -1,5 +1,8 @@
-<cfcontent type="text/plain">
+#!/usr/bin/env python3
 
-<cfloop collection="#CGI#" item="key">
-    #key# = #CGI[key]#
-</cfloop>
+import os
+
+print("Content-Type: text/plain\n")
+
+for key, value in os.environ.items():
+    print(f"{key}={value}")

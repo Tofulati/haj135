@@ -1,17 +1,26 @@
-<cfset team = "HAJ135">
-<cfset lang = "ColdFusion">
-<cfset datetime = Now()>
-<cfset ip = CGI.REMOTE_ADDR>
+#!/usr/bin/env python3
 
-<!DOCTYPE html>
-<html>
+import os
+from datetime import datetime
+
+print("Content-Type: text/html\n")
+
+ip = os.environ.get("REMOTE_ADDR", "Unknown")
+
+html = f"""<!DOCTYPE html>
+    <html lang="en">
     <head>
-        <title>Hello HTML ColdFusion</title>
+        <meta charset="UTF-8">
+        <title>Hello HTML Python</title>
     </head>
     <body>
-        <h1>Hello from #team#</h1>
-        <p>Welcome to the HTML ColdFusion page</p>
-        <p>Generated at: #DateTimeFormat(datetime, "mm-dd-yyyy HH:nn:ss")#</p>
-        <p>Your IP address: #ip#</p>
+        <h1>Hello from HAJ135</h1>
+        <p>Welcome to Python HTML - Albert, Hajin, Joey</p>
+        <p>Language: Python</p>
+        <p>Generated at: {datetime.now()}</p>
+        <p>Your IP Address: {ip}</p>
     </body>
-</html>
+    </html>
+"""
+
+print(html)

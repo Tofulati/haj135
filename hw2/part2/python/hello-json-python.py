@@ -1,11 +1,17 @@
-<cfcontent type="application/json">
+#!/usr/bin/env python3
 
-<cfset response = {
-    team = "HAJ135",
-    message = "Hello JSON ColdFusion - Albert, Hajin, Joey",
-    language = "ColdFusion",
-    generated_at = DateTimeFormat(Now(), "mm-dd-YYYY HH:nn:ss"),
-    ip = CGI.REMOTE_ADDR
-}>
+import os
+import json
+from datetime import datetime
 
-#SerializeJSON(reponse)#
+print("Content-type: application/json\n")
+
+response = {
+    "greeting": "Hello from HAJ135",
+    "message": "Welcome to Python JSON - Albert, Hajin, Joey",
+    "language": "Python",
+    "generated_at": str(datetime.now()),
+    "ip": os.environ.get("REMOTE_ADDR", "Unknown")
+}
+
+print(json.dumps(response))
