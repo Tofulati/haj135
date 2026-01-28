@@ -4,35 +4,44 @@ import os
 import sys
 import json
 from urllib.parse import parse_qs
+from datetime import datetime
+import socket
 
 method = os.environ.get("REQUEST_METHOD", "GET").upper()
+protocol = os.environ.get("SERVER_PROTOCOL", "unknown")
+query_string = os.environ.get("QUERY_STRING", "")
 content_type = os.environ.get("CONTENT_TYPE", "")
 
-length = int(os.environ.get("CONTENT_LENGTH", 0))
-input_data = sys.stdin.read(length) if length > 0 else ""
+length = int(os.environ.get("CONTENT_LENGTH", 0)) if os.environ.get("CONTENT_LENGTH") else 0
+raw_body = sys.stdin.read(length) if length > 0 else ""
 
-data = {}
+parsed_query = parse_qs(query_string)
+parsed_query = {k: v[0] if len(v) == 1 else v for k, v in parsed_query.items()}
 
-if method == "GET":
-    query = os.environ.get("QUERY_STRING", "")
-    data = parse_qs(query)
-    data = {k: v[0] if len(v) == 1 else v for k, v in data.items()}
-else:
+parsed_body = {}
+if method in ["POST", "PUT", "DELETE"]:
     if "application/json" in content_type:
         try:
-            data = json.loads(input_data) if input_data else {}
+            parsed_body = json.loads(raw_body) if raw_body else {}
         except json.JSONDecodeError:
-            data = {"error": "Invalid JSON"}
+            parsed_body = {"error": "Invalid JSON"}
     else:
-        data = parse_qs(input_data)
-        data = {k: v[0] if len(v) == 1 else v for k, v in data.items()}
+        parsed_body = parse_qs(raw_body)
+        parsed_body = {k: v[0] if len(v) == 1 else v for k, v in parsed_body.items()}
 
-response = {
-    "method": method,
-    "user_ip": os.environ.get("REMOTE_ADDR", "Unknown"),
-    "user_agent": os.environ.get("HTTP_USER_AGENT", "Unknown"),
-    "data": data
-}
+hostname = socket.gethostname()
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+user_ip = os.environ.get("REMOTE_ADDR", "Unknown")
+user_agent = os.environ.get("HTTP_USER_AGENT", "Unknown")
 
-print("Content-Type: application/json\n")
-print(json.dumps(response, indent=2))
+print("Content-Type: text/plain\n")
+print(f"Server Protocol: {protocol}")
+print(f"HTTP Method: {method}")
+print(f"Raw Query: {query_string}")
+print(f"Parsed Query: {json.dumps(parsed_query)}")
+print(f"Raw Message Body: {raw_body}")
+print(f"Parsed Message Body: {json.dumps(parsed_body)}")
+print(f"Hostname: {hostname}")
+print(f"Timestamp: {timestamp}")
+print(f"IP Address: {user_ip}")
+print(f"User-Agent: {user_agent}")
