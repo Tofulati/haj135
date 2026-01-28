@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 
+extern char **environ;
+
 int main() {
     std::cout << "Content-Type: text/plain\n\n";
 
