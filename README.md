@@ -13,7 +13,7 @@
 - ```{user}@64.23.226.243```
 - Each auth user has a password
 - Root access only for system admin
-- To access mysql the command below using the same root user password when prompted:
+- To access mysql the command below using the root user password when prompted:
 ```> mysql -u root -p```
 
 ## Live Website
@@ -32,17 +32,17 @@
 - **Overview:**
   - Code is pushed from local machine to bare Git repo on server
   - A ```post-recieve``` hook checks out latest version on main branch
-  - Files are deployed to Apache web root
-  - Latest version on local main branch is pushed to remote Github repository
-  - Root access isn't required for deployment (as long as user on server)
+  - Files are copied over ("deployed") to Apache web root directory
+  - Latest version on local main branch is pushed to remote Github repository (for visibility/collaboration)
+  - Root access isn't required for deployment (`prod` alias may point to any existing user on the server)
 - **Deployment Flow:**
   1. Developer commits changes locally
   2. Developer pushes to production remote 
   3. Git hook executes on server
-  4. Website updates automatically
+  4. Website/Github updates automatically
 - **Server Paths:**
   - Bare Git repo: ```/var/repo/haj135.git```
-  - Web root: ```/var/www/haj135.site/public_html```
+  - Web root: ```/var/www/haj135.site```
   - Github repository: ```https://github.com/Tofulati/haj135.git```
   - Deployment hook: ```/var/repo/haj135.git/hooks/post-receive```
   - Deployment log: ```/var/log/deploy-haj135.log```

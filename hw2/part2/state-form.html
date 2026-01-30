@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAJ135 - Echo Form</title>
+    <title>HAJ135 - State Form</title>
     <link rel="stylesheet" href="form.css">
 
     <!-- Google tag (gtag.js) -->
@@ -18,32 +18,20 @@
     <script src="https://cdn.logr-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
     <script>window.LogRocket && window.LogRocket.init('nu7cf9/haj135site');</script>
 
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="9f5a7988-b5d6-4853-b353-53f0b7aed2e0"></script>
 </head>
 
 <body>
-    <h1>Echo Endpoint Tester Form</h1>
+    <h1>State Endpoint Tester Form</h1>
 
-    <form id="form">
+    <form id="form" method="POST">
         <label>
             Target Endpoint
             <select id="endpoint">
-                <option value="./php/echo-php.php">PHP</option>
-                <option value="/cgi-bin/echo-python.py">Python</option>
-                <option value="/cgi-bin/echo-cpp.cgi">CPP</option>
+                <option value="./php/state-php.php">PHP</option>
+                <option value="/cgi-bin/state-python.py">Python</option>
+                <option value="/cgi-bin/state-cpp.cgi">CPP</option>
             </select>
         </label>
-        
-        <label>
-            HTTP method
-            <select id="httpMethod">
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
-        </label>
-
         <label>
             Encoding Method
             <select id="encodingMethod">
@@ -51,7 +39,6 @@
                 <option value="application/json" >application/json</option>
             </select>
         </label>
-
         <label>
             Name
             <input type="text" id="name" name="name" placeholder="User">
@@ -62,13 +49,13 @@
             <textarea id="message" name="message">Test message</textarea>
         </label>
 
-        <button type="submit">Send Request</button>
+        <button type="submit">Save To Cookies</button>
     </form>
 
     <h2>Response</h2>
     <pre id="response">Pending Response.</pre>
 
     <noscript><p>This application requires JavaScript enabled.</p></noscript>
-    <script src="./echo-form.js"></script>
+    <script src="./state-form.js"></script>
 </body>
 </html>

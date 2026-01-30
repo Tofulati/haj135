@@ -2,7 +2,6 @@ document.getElementById("form").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const endpoint = document.getElementById("endpoint").value;
-    const method = document.getElementById("httpMethod").value;
     const encoding = document.getElementById("encodingMethod").value;
     const responseBox = document.getElementById("response");
 
@@ -13,26 +12,22 @@ document.getElementById("form").addEventListener("submit", function (e) {
 
     let url = endpoint;
     let options = {
-        method: method,
+        method: "POST",
         headers: {}
     };
 
-    if (method === "GET") {
-        url += "?" + new URLSearchParams(data).toString();
+    if (encoding === "application/json") {
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(data);
     } else {
-        if (encoding === "application/json") {
-            options.headers["Content-Type"] = "application/json";
-            options.body = JSON.stringify(data);
-        } else {
-            options.headers["Content-Type"] = "application/x-www-form-urlencoded";
-            options.body = new URLSearchParams(data).toString();
-        }
+        options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        options.body = new URLSearchParams(data).toString();
     }
 
     fetch(url, options)
         .then(res => res.text())
-        .then(text => {
-            responseBox.textContent = text;
+        .then(_ => {
+            responseBox.innerHTML = '<a href="/hw2/part2/state-display.html">State Display</a>';
         })
         .catch(err => {
             responseBox.textContent = "Request Failed";

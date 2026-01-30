@@ -16,27 +16,28 @@ html, body {
     padding: 2rem;
 }
 
-#echoForm {
+#form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     background-color: azure;
     padding: 2rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     width: 100%;
     max-width: 500px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-#echoForm label {
+#form label {
     display: flex;
     flex-direction: column;
     font-weight: bold;
 }
 
-#echoForm input,
-#echoForm textarea,
-#echoForm select {
+#form input,
+#form textarea,
+#form select {
     margin-top: 0.5rem;
     padding: 0.5rem;
     border-radius: 5px;
@@ -44,12 +45,12 @@ html, body {
     font-size: 1rem;
 }
 
-#echoForm textarea {
+#form textarea {
     resize: vertical;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#echoForm button {
+#form button {
     padding: 0.75rem;
     font-size: 1rem;
     border: none;
@@ -60,7 +61,7 @@ html, body {
     transition: background-color 0.3s;
 }
 
-#echoForm button:hover {
+#form button:hover {
     background-color: #005fa3;
 }
 
