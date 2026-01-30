@@ -7,6 +7,6 @@ $message = $parsed_query['message'];
 $expire = 0;
 $path = "/";
 
-setcookie('username', $name, $expire, $path)
-setcookie('message', $message, $expire, $path)
+setcookie('username', $name, $expire, $path);
+setcookie('message', $message, $expire, $path);
 ?>
