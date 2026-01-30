@@ -10,7 +10,7 @@ const clear_cookies_btn = document.getElementById("clear-cookies-btn")
 const username = getCookie("name");
 const message = getCookie("message");
 
-clear_cookies_btn.disabled = true;
+clear_cookies_btn.hidden = true;
 
 // Display cookies if set
 if (username && message) {
@@ -21,7 +21,7 @@ if (username && message) {
     <p>${message}</p>
     `;
 
-    clear_cookies_btn.disabled = false;
+    clear_cookies_btn.hidden = false;
     clear_cookies_btn.addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -29,6 +29,6 @@ if (username && message) {
 } else {
     display.innerHTML = `
     <h3>Cookies Not Found</h3>
-    <p>Set cookies at <a href="/hw2/part2/state-form.html">State Form</a></p>
+    <p>Set cookies with <a href="/hw2/part2/state-form.html">State Form</a></p>
     `;
 }
