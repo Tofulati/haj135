@@ -1,12 +1,22 @@
 <?php
-$query_string = $_SERVER['QUERY_STRING'] ?? '';
-parse_str($query_string, $parsed_query);
+$contentType = $_SERVER["CONTENT_TYPE"] ?? '';
+$name = "";
+$message = "";
 
-$name = $parsed_query['name'];
-$message = $parsed_query['message'];
-$expire = 0;
-$path = "/";
+if (stripos($contentType, 'application/json') !== false) {
+    // Handle JSON: Read raw input stream
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
+    $name = $data['name'] ?? '';
+    $message = $data['message'] ?? '';
+} else {
+    // Handle Form Data: PHP does this automatically in $_POST
+    $name = $_POST['name'] ?? '';
+    $message = $_POST['message'] ?? '';
+}
 
-setcookie('username', $name, $expire, $path);
-setcookie('message', $message, $expire, $path);
+// 2. Set Cookies
+// setcookie() sends headers, so this must happen before any HTML output
+setcookie('username', $name, 0, "/");
+setcookie('message', $message, 0, "/");
 ?>
