@@ -1,53 +1,87 @@
-#include <cstdlib>
 #include <iostream>
 #include <string>
-#include <cstdlib>
-#include <sstream>
-#include <ctime>
-#include <map>
 #include <vector>
+#include <cstdlib>
 #include <algorithm>
-#include <iomanip>
-#include <unistd.h>
-#include <netdb.h>
-#include <format>
 
-std::map<std::string,std::string> parse_query(const std::string& query) {
-    std::map<std::string,std::string> result;
-    std::istringstream ss(query);
-    std::string pair;
-    while (std::getline(ss, pair, '&')) {
-        size_t eq = pair.find('=');
-        if (eq != std::string::npos) {
-            result[pair.substr(0, eq)] = pair.substr(eq+1);
+// URL decoder
+std::string url_decode(std::string str) {
+    std::string ret;
+    for (size_t i = 0; i < str.length(); i++) {
+        if (str[i] == '%') {
+            if (i + 2 < str.length()) {
+                int value;
+                sscanf(str.substr(i + 1, 2).c_str(), "%x", &value);
+                ret += static_cast<char>(value);
+                i += 2;
+            }
+        } else if (str[i] == '+') {
+            ret += ' ';
         } else {
-            result[pair] = "";
+            ret += str[i];
         }
     }
-    return result;
+    return ret;
 }
 
-std::string map_to_json(const std::map<std::string,std::string>& m) {
-    std::string s = "{";
-    for(auto it=m.begin(); it!=m.end(); ++it) {
-        if(it!=m.begin()) s += ", ";
-        s += "\"" + it->first + "\": \"" + it->second + "\"";
+// Extract value by key from a string
+std::string get_value(const std::string& body, const std::string& key, bool is_json) {
+    if (is_json) {
+        // Simple JSON search: "key":"value"
+        std::string search = "\"" + key + "\":";
+        size_t start = body.find(search);
+        if (start == std::string::npos) return "";
+        
+        start += search.length();
+        // Skip whitespace and opening quote
+        while (start < body.length() && (body[start] == ' ' || body[start] == '\"')) start++;
+        
+        size_t end = start;
+        while (end < body.length() && body[end] != '\"' && body[end] != ',' && body[end] != '}') end++;
+        
+        return body.substr(start, end - start);
+    } else {
+        // Simple URL-encoded search: key=value
+        std::string search = key + "=";
+        size_t start = body.find(search);
+        // Handle case where key is at start or preceded by &
+        if (start != 0 && (start == std::string::npos || body[start-1] != '&')) {
+            // Try finding &key=
+            search = "&" + key + "=";
+            start = body.find(search);
+            if (start != std::string::npos) start += 1; // skip &
+        }
+        
+        if (start == std::string::npos) return "";
+        
+        start += (key.length() + 1); // skip key=
+        size_t end = body.find('&', start);
+        if (end == std::string::npos) end = body.length();
+        
+        return url_decode(body.substr(start, end - start));
     }
-    s += "}";
-    return s;
 }
 
 int main() {
-    std::cout << "Content-Type: text/plain\n\n";
+    const char* len_str = getenv("CONTENT_LENGTH");
+    int len = len_str ? std::stoi(len_str) : 0;
 
-    const char* query_c = getenv("QUERY_STRING");
-    std::string query = query_c ? query_c : "";
-    std::map<std::string,std::string> parsed_query = parse_query(query);
-        
-    if (parsed_query.count("name") && parsed_query.count("message")) {
-        std::cout << "Set-Cookie: username=" << parsed_query["name"] << "; Path=/;\r\n";
-        std::cout << "Set-Cookie: message=" << parsed_query["message"] << "; Path=/;\r\n";
+    std::string body;
+    if (len > 0) {
+        body.resize(len);
+        std::cin.read(&body[0], len);
     }
+
+    const char* type_str = getenv("CONTENT_TYPE");
+    std::string content_type = type_str ? type_str : "";
+    bool is_json = (content_type.find("application/json") != std::string::npos);
+
+    std::string name = get_value(body, "name", is_json);
+    std::string message = get_value(body, "message", is_json);
+
+    std::cout << "Set-Cookie: username=" << name << "; Path=/;\r\n";
+    std::cout << "Set-Cookie: message=" << message << "; Path=/;\r\n";
+    std::cout << "Content-Type: text/plain\r\n\r\n";
 
     return 0;
 }

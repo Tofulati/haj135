@@ -1,19 +1,43 @@
 #!/usr/bin/env python3
-
 import os
+import sys
+import json
 from urllib.parse import parse_qs
 import http.cookies
 
-query_string = os.environ.get("QUERY_STRING", "")
-parsed_query = parse_qs(query_string)
-parsed_query = {k: v[0] if len(v) == 1 else v for k, v in parsed_query.items()}
+# 1. Read POST Body
+try:
+    content_length = int(os.environ.get("CONTENT_LENGTH", 0))
+except ValueError:
+    content_length = 0
 
+body = sys.stdin.read(content_length)
+
+# 2. Parse Data based on Content-Type
+content_type = os.environ.get("CONTENT_TYPE", "")
+name = ""
+message = ""
+
+if "application/json" in content_type:
+    try:
+        data = json.loads(body)
+        name = data.get("name", "")
+        message = data.get("message", "")
+    except json.JSONDecodeError:
+        pass
+else:
+    # parse_qs returns a dictionary of lists: {'name': ['value']}
+    parsed = parse_qs(body)
+    name = parsed.get("name", [""])[0]
+    message = parsed.get("message", [""])[0]
+
+# 3. Create Cookie Object
 cookie = http.cookies.SimpleCookie()
-
-cookie["username"] = parsed_query["name"]
-cookie["message"] = parsed_query["message"]
+cookie["username"] = name
 cookie["username"]["path"] = "/"
+cookie["message"] = message
 cookie["message"]["path"] = "/"
 
-print("Content-Type: text/plain\n")
-print(cookie.output())
+# 4. Output Headers
+print(cookie.output()) 
+print("Content-Type: text/plain\r\n")
