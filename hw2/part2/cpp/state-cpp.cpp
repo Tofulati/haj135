@@ -2,9 +2,36 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <sstream>
 #include <algorithm>
+#include <iomanip>
 
-// URL decoder
+
+// 1. URL Encoder (Fixes the space issue in cookies)
+std::string url_encode(const std::string &value) {
+    std::ostringstream escaped;
+    escaped.fill('0');
+    escaped << std::hex;
+
+    for (std::string::const_iterator i = value.begin(), n = value.end(); i != n; ++i) {
+        std::string::value_type c = (*i);
+
+        // Keep alphanumeric and safe characters
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+            continue;
+        }
+
+        // Encode spaces and special chars to %XX
+        escaped << std::uppercase;
+        escaped << '%' << std::setw(2) << int((unsigned char) c);
+        escaped << std::nouppercase;
+    }
+
+    return escaped.str();
+}
+
+// 2. URL Decoder (For reading input)
 std::string url_decode(std::string str) {
     std::string ret;
     for (size_t i = 0; i < str.length(); i++) {
@@ -24,47 +51,46 @@ std::string url_decode(std::string str) {
     return ret;
 }
 
-// Extract value by key from a string
-std::string get_value(const std::string& body, const std::string& key, bool is_json) {
-    if (is_json) {
-        // Simple JSON search: "key":"value"
-        std::string search = "\"" + key + "\":";
-        size_t start = body.find(search);
-        if (start == std::string::npos) return "";
-        
-        start += search.length();
-        // Skip whitespace and opening quote
-        while (start < body.length() && (body[start] == ' ' || body[start] == '\"')) start++;
-        
-        size_t end = start;
-        while (end < body.length() && body[end] != '\"' && body[end] != ',' && body[end] != '}') end++;
-        
-        return body.substr(start, end - start);
-    } else {
-        // Simple URL-encoded search: key=value
-        std::string search = key + "=";
-        size_t start = body.find(search);
-        // Handle case where key is at start or preceded by &
-        if (start != 0 && (start == std::string::npos || body[start-1] != '&')) {
-            // Try finding &key=
-            search = "&" + key + "=";
-            start = body.find(search);
-            if (start != std::string::npos) start += 1; // skip &
-        }
-        
-        if (start == std::string::npos) return "";
-        
-        start += (key.length() + 1); // skip key=
-        size_t end = body.find('&', start);
-        if (end == std::string::npos) end = body.length();
-        
-        return url_decode(body.substr(start, end - start));
+// 3. Simple JSON Parser
+std::string get_json_value(const std::string& body, const std::string& key) {
+    std::string search = "\"" + key + "\":";
+    size_t start = body.find(search);
+    if (start == std::string::npos) return "";
+    
+    start += search.length();
+    while (start < body.length() && (body[start] == ' ' || body[start] == '"')) {
+        start++;
     }
+    size_t end = start;
+    while (end < body.length() && body[end] != '"' && body[end] != ',' && body[end] != '}') {
+        end++;
+    }
+    return body.substr(start, end - start);
 }
 
+// 4. Form Data Parser
+std::string get_form_value(const std::string& body, const std::string& key) {
+    std::stringstream ss(body);
+    std::string pair;
+    while (std::getline(ss, pair, '&')) {
+        size_t eq = pair.find('=');
+        if (eq != std::string::npos) {
+            std::string k = pair.substr(0, eq);
+            if (k == key) {
+                return url_decode(pair.substr(eq + 1));
+            }
+        }
+    }
+    return "";
+}
+
+// --- MAIN ---
+
 int main() {
+    // 1. Read Input
     const char* len_str = getenv("CONTENT_LENGTH");
-    int len = len_str ? std::stoi(len_str) : 0;
+    int len = 0;
+    if (len_str) len = std::atoi(len_str);
 
     std::string body;
     if (len > 0) {
@@ -72,16 +98,27 @@ int main() {
         std::cin.read(&body[0], len);
     }
 
+    // 2. Parse Data
     const char* type_str = getenv("CONTENT_TYPE");
     std::string content_type = type_str ? type_str : "";
-    bool is_json = (content_type.find("application/json") != std::string::npos);
+    std::string name, message;
+    
+    if (content_type.find("application/json") != std::string::npos) {
+        name = get_json_value(body, "name");
+        message = get_json_value(body, "message");
+    } else {
+        name = get_form_value(body, "name");
+        message = get_form_value(body, "message");
+    }
 
-    std::string name = get_value(body, "name", is_json);
-    std::string message = get_value(body, "message", is_json);
-
-    std::cout << "Set-Cookie: username=" << name << "; Path=/;\r\n";
-    std::cout << "Set-Cookie: message=" << message << "; Path=/;\r\n";
+    // 3. Output Headers
+    // APPLY url_encode() HERE
+    std::cout << "Set-Cookie: username=" << url_encode(name) << "; Path=/;\r\n";
+    std::cout << "Set-Cookie: message=" << url_encode(message) << "; Path=/;\r\n";
     std::cout << "Content-Type: text/plain\r\n\r\n";
+
+    // 4. Output Body
+    std::cout << "Cookies set for: " << name;
 
     return 0;
 }
