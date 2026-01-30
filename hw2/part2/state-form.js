@@ -1,9 +1,7 @@
-document.getElementById("echoForm").addEventListener("submit", function (e) {
+document.getElementById("form").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const endpoint = document.getElementById("endpoint").value;
-    const method = document.getElementById("httpMethod").value;
-    const encoding = document.getElementById("encodingMethod").value;
     const responseBox = document.getElementById("response");
 
     const data = {
