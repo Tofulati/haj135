@@ -23,13 +23,20 @@
 <body>
     <h1>State Endpoint Tester Form</h1>
 
-    <form id="form">
+    <form id="form" method="POST">
         <label>
             Target Endpoint
             <select id="endpoint">
                 <option value="./php/state-php.php">PHP</option>
                 <option value="/cgi-bin/state-python.py">Python</option>
                 <option value="/cgi-bin/state-cpp.cgi">CPP</option>
+            </select>
+        </label>
+        <label>
+            Encoding Method
+            <select id="encodingMethod">
+                <option value="application/x-www-form-urlencoded">application-x-www-form-urlencoded</option>
+                <option value="application/json" >application/json</option>
             </select>
         </label>
         <label>
@@ -42,7 +49,7 @@
             <textarea id="message" name="message">Test message</textarea>
         </label>
 
-        <button type="submit">Save State</button>
+        <button type="submit">Save To Cookies</button>
     </form>
 
     <h2>Response</h2>
