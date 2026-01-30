@@ -15,4 +15,5 @@ cookie["message"] = parsed_query["message"]
 cookie["username"]["path"] = "/"
 cookie["message"]["path"] = "/"
 
+print("Content-Type: text/plain\n")
 print(cookie.output())

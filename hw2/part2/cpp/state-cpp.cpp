@@ -44,7 +44,7 @@ int main() {
     std::string query = query_c ? query_c : "";
     std::map<std::string,std::string> parsed_query = parse_query(query);
         
-    if (parsed_query.count("name")) {
+    if (parsed_query.count("name") && parsed_query.count("message")) {
         std::cout << "Set-Cookie: username=" << parsed_query["name"] << "; Path=/;\r\n";
         std::cout << "Set-Cookie: message=" << parsed_query["message"] << "; Path=/;\r\n";
     }
