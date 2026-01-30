@@ -1,18 +1,16 @@
 function getCookie(name) {
-    // The regular expression looks for the cookie name with optional leading 
-    // characters and a semicolon or end of string as a boundary.
     const match = document.cookie.match(new RegExp('(^|;\\s*)' + name + '=([^;]*)'));
     return match ? decodeURIComponent(match[2]) : null;
 }
 
 const display = document.getElementById("cookie-display");
-const clear_cookies_btn = document.getElementById("clear-cookies-btn")
-const username = getCookie("name");
+const clear_cookies_btn = document.getElementById("clear-cookies-btn");
+
+const username = getCookie("username");
 const message = getCookie("message");
 
 clear_cookies_btn.hidden = true;
 
-// Display cookies if set
 if (username && message) {
     display.innerHTML = `
     <h3>Name</h3>
@@ -22,10 +20,16 @@ if (username && message) {
     `;
 
     clear_cookies_btn.hidden = false;
-    clear_cookies_btn.addEventListener("submit", function (e) {
-        e.preventDefault();
 
+    clear_cookies_btn.addEventListener("click", function () {
+        
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "message=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        // Reload the page to update the UI
+        location.reload();
     });
+
 } else {
     display.innerHTML = `
     <h3>Cookies Not Found</h3>
